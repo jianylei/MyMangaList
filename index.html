@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Book List (jianylei) </title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+  </head>
+  <body>
+    <main style="font-family: 'Poppins', sans-serif">
+        <div class="container mt-4">
+
+            <!-- main heading -->
+            <h1 class="display-4 text-primary text-center mb-5"><i class="fas fa-book"></i>
+                Book List 
+            </h1>
+
+            <!-- Book list -->
+            <table class="table" hidden>
+                <thead>
+                    <tr>
+                        <th> Title </th>
+                        <th> Author </th>
+                        <th> ISBN# </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="book-list"></tbody>
+            </table>
+
+             <!-- Add book form -->
+             <div class="form-container mt-5" style="width: 85%; margin: auto;">
+             <form id="book-form">
+                <div class="form-group">
+                    <label class="form-label" for="title"> Title </label>
+                    <input type="text" id="title" class="form-control">
+                </div>
+                <div class="form-group mt-4">
+                    <label class="form-label" for="author"> Author </label>
+                    <input type="text" id="author" class="form-control">
+                </div>
+                <div class="form-group mt-4">
+                    <label class="form-label" for="isbn"> ISBN# </label>
+                    <input type="text" id="isbn" class="form-control">
+                </div>
+                <input type="submit" value="Add Book" class="btn btn-primary fa-pull-right mt-4">
+            </form>
+            </div>
+        </div>
+    </main>
+	<script src="app.js"></script>
+  </body>
+</html>
