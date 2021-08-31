@@ -10,32 +10,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
   </head>
   <body>
-    <main style="font-family: 'Poppins', sans-serif">
+    <main>
         <div class="container mt-4">
 
             <!-- main heading -->
             <h1 class="display-4 text-primary text-center mb-5"><i class="fas fa-book"></i>
                 Book List 
             </h1>
-
             <!-- Book list -->
-            <table class="table" hidden>
-                <thead>
-                    <tr>
-                        <th> Title </th>
-                        <th> Author </th>
-                        <th> ISBN# </th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="book-list"></tbody>
-            </table>
-
+            <div class="table-container" hidden>
+                <a href="#book-form" id="form-link" class="btn btn-outline-primary fa-pull-right mb-3"> Add Book </a>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th> Title </th>
+                            <th> Author </th>
+                            <th> ISBN# </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="book-list"></tbody>
+                </table>
+            </div>
+            
              <!-- Add book form -->
-             <div class="form-container mt-5" style="width: 85%; margin: auto;">
+             <div class="form-container">
              <form id="book-form">
                 <div class="form-group">
                     <label class="form-label" for="title"> Title </label>

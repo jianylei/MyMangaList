@@ -1,0 +1,14 @@
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+/* book list */
+#form-link{
+    border: none;
+}
+
+/* form */
+.form-container{
+    width: 80%;
+    margin: 100px auto 200px auto;
+}
