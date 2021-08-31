@@ -48,16 +48,19 @@ const bookList = document.querySelector("#book-list");
 const form = document.querySelector("#book-form");
 //events
 document.addEventListener("DOMContentLoaded", Library.display);
-form.addEventListener("submit", function(e){
-     //prevent actual submission
-     e.preventDefault();
+form.addEventListener("submit", function (e) {
+    //prevent actual submission
+    e.preventDefault();
 
-     const title = document.querySelector("#title").value;
-     const author = document.querySelector("#author").value;
-     const isbn = document.querySelector("#isbn").value;
-     const completed = document.querySelector(".check-slider").checked;
+    const title = document.querySelector("#title").value;
+    const author = document.querySelector("#author").value;
+    const isbn = document.querySelector("#isbn").value;
+    const completed = document.querySelector(".check-slider").checked;
 
-     const newBook = new Book(title, author, isbn, completed);
-     Library.addToList(newBook);
+    if(title){
+        const newBook = new Book(title, author, isbn, completed);
+        Library.addToList(newBook);
+    }
+    
 });
 
