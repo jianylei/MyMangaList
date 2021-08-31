@@ -24,13 +24,14 @@
                 <i class="fas fa-book-reader"></i>
                 MyReadList
             </h1>
-            <a href="#book-form" id="form-link"> Add New </a>
+            <a href="#book-form" id="form-link" hidden> Add New </a>
         </div>
 
         <!-- cards -->
         <div class="card-container">
             <div class="card-grid">
                 <div class="card-child">
+
                     <div class="card text-white bg-primary mb-2" id="card-style"
                         style="background-image: url('https://images-na.ssl-images-amazon.com/images/I/81vbN16NtXL.jpg');">
                         <div class="card-body" id="card-body-style">
@@ -76,13 +77,19 @@
                     <!-- number of pages -->
                     <div class="form-group mt-4">
                         <label class="form-label" for="pages"> Number of Pages </label>
-                        <input type="number" id="pages" class="form-control">
+                        <input type="number" id="pages-number" class="form-control">
                     </div>
                     <!-- pages read -->
                     <div class="form-group mt-4 mb-4">
                         <label class="form-label" for="pages"> Current Page Number </label>
-                        <input type="number" id="pages" class="form-control">
+                        <input type="number" id="pages-read" class="form-control">
                     </div>
+                    <!-- author -->
+                </div>
+                <!-- cover url -->
+                <div class="form-group mb-4">
+                    <label class="form-label" for="url"> Cover Art URL (optional) </label>
+                    <input type="text" id="url" class="form-control ">
                 </div>
                 <input type="submit" value="Add Book" class="btn btn-primary fa-pull-right mt-4">
             </form>

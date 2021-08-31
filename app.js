@@ -1,35 +1,42 @@
+let completedflag = false;
+
 let myLibrary = [{
     title: "batman",
     author: "guy who wrote batman",
-    isbn: "6654",
-    completed: true
+    completed: true,
+    pages: 156,
+    read: 156
 },{
     title: "spiderman",
     author: "guy who wrote spiderman",
-    isbn: "5154",
-    completed: false
+    completed: false,
+    pages: 216,
+    read: 2
 }];
 
 class Book{
-    constructor(title="", author="", isbn="", completed = false){
+    constructor(title, author, completed, pages, read=0){
         this.title = title;
         this.author = author;
-        this.isbn = isbn;
         this.completed = completed;
+        this.pages = pages;
+        this.read = read;
     }
 }
 
 class Library {
     static display() {
         const books = myLibrary;
-        if (books[0]) {
-            bookView.hidden = false;
+        if (cardView.innerText) {
+            formLink.hidden = false;
             books.forEach((book) => Library.addToList(book))
         }
     }
     static addToList(book) {
-        const row = document.createElement("tr");
-        const checked = (book.completed) ? "checked" : "";
+        const card = document.createElement("div");
+
+
+        let checked = (book.completed) ? "checked" : "";
         row.innerHTML = `
             <td> ${book.title} </td>
             <td> ${book.author} </td>
@@ -49,13 +56,30 @@ class Library {
     }
 }
 
-const bookView = document.querySelector(".table-container");
-const bookList = document.querySelector("#book-list");
+const cardView = document.querySelector(".card-grid");
+const formLink = document.querySelector("#form-link");
 const form = document.querySelector("#book-form");
-const titleValidation = document.querySelector("#title");
-const validationFeedback = document.querySelector("#title-feedback");
+const formToggle = document.querySelector("#flexSwitchCheckDefault");
+const pagesRead = document.querySelector("#pages-read");
 //events
 document.addEventListener("DOMContentLoaded", Library.display);
+
+formToggle.onclick = () => {
+    completedflag = (completedflag)? false: true;
+    
+    if(completedflag) {
+        pagesRead.style.pointerEvents = "none";
+        pagesRead.placeholder = "Disabled";
+    }
+    else{
+        pagesRead.style.pointerEvents = "";
+        pagesRead.placeholder = "";
+    }
+}
+
+
+
+
 form.addEventListener("submit", function (e) {
     //prevent actual submission
     e.preventDefault();
@@ -85,18 +109,11 @@ form.addEventListener("submit", function (e) {
             titleValidation.classList.remove("is-invalid");
             Library.clearForm();
         }
-        
-            
-        
 
-        
-        
-        
-        
-
-        
         
     }
     
+
+    completedflag = false;
 });
 
