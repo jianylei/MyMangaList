@@ -28,8 +28,8 @@ class Library {
         }
     }
     static addToList(book) {
-        let row = document.createElement("tr");
-        let checked = (book.completed) ? "checked" : "";
+        const row = document.createElement("tr");
+        const checked = (book.completed) ? "checked" : "";
         row.innerHTML = `
             <td> ${book.title} </td>
             <td> ${book.author} </td>
@@ -37,7 +37,7 @@ class Library {
             <td> <div class="form-switch main-switch mt-1 mb-4">
                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" ${checked}>
             </div> </td>
-            <td><a href="" class="btn btn-danger btn-sm delete"> tmp </a></td>
+            <td><a href="" class="btn btn-danger btn-sm delete"> x </a></td>
         `;
         bookList.appendChild(row);
     }
@@ -45,7 +45,19 @@ class Library {
 
 const bookView = document.querySelector(".table-container");
 const bookList = document.querySelector("#book-list");
+const form = document.querySelector("#book-form");
 //events
-document.addEventListener("DOMContentLoaded", function(){
-    Library.display();
+document.addEventListener("DOMContentLoaded", Library.display);
+form.addEventListener("submit", function(e){
+     //prevent actual submission
+     e.preventDefault();
+
+     const title = document.querySelector("#title").value;
+     const author = document.querySelector("#author").value;
+     const isbn = document.querySelector("#isbn").value;
+     const completed = document.querySelector(".check-slider").checked;
+
+     const newBook = new Book(title, author, isbn, completed);
+     Library.addToList(newBook);
 });
+
