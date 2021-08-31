@@ -1,68 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Book List (jianylei) </title>
+    <title> MyReadList (jianylei) </title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com"> 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/bootstrap.min.css">
     <link rel="stylesheet" href="style/style.css">
-  </head>
-  <body>
-    <main>
-        <div class="container mt-5">
+</head>
 
-            <!-- main heading -->
-            <h1 class="display-4 text-primary text-center mb-5"><i class="fas fa-book"></i>
-                Book List 
+<body>
+    <main>
+
+        <!-- main heading -->
+        <div class="heading-container">
+            <h1 class="display-6" id="main-head" style="color: var(--primary-color); font-family: var(--primary-font);">
+                <i class="fas fa-book-reader"></i>
+                MyReadList
             </h1>
-            <!-- Book list -->
-            <div class="table-container" hidden>
-                <a href="#book-form" id="form-link" class="btn btn-outline-primary fa-pull-right mb-3"> New Book </a>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th> Title </th>
-                            <th> Author </th>
-                            <th> ISBN# </th>
-                            <th> Completed </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="book-list"></tbody>
-                </table>
+            <a href="#book-form" id="form-link"> Add New </a>
+        </div>
+
+        <!-- cards -->
+        <div class="card-container">
+            <div class="card-grid">
+                <div class="card-child">
+                    <div class="card text-white bg-primary mb-2" id="card-style"
+                        style="background-image: url('https://images-na.ssl-images-amazon.com/images/I/81vbN16NtXL.jpg');">
+                        <div class="card-body" id="card-body-style">
+                            Tite Kubo<span id="card-title">Bleach</span>
+                        </div>
+                    </div>
+                    <!-- card buttons -->
+                    <div class="card-btn">
+                        <div class="card-pages">
+                            0 / 156 Pages
+                        </div>
+                        <button type="button" id="card-update-page"> <i class="fas fa-edit"> </i></button>
+                        <button type="button" id="card-update-complete"><i class="far fa-check-circle"></i></button>
+                        <button type="button" id="card-update-delete"><i class="far fa-trash-alt"></i></button>
+                    </div>
+                </div>
             </div>
-            
-             <!-- Add book form -->
-             <div class="form-container">
-             <form id="book-form">
+        </div>
+
+        <!-- Add book form -->
+        <div class="form-container">
+            <form id="book-form">
+                <!-- title -->
                 <div class="form-group">
                     <label class="form-label" for="title"> Title </label>
                     <input type="text" id="title" class="form-control">
+                    <div class="invalid-feedback" id="title-feedback"></div>
                 </div>
+                <!-- author -->
                 <div class="form-group mt-4">
                     <label class="form-label" for="author"> Author </label>
-                    <input type="text" id="author" class="form-control">
+                    <input type="text" id="author" class="form-control ">
                 </div>
-                <div class="form-group mt-4">
-                    <label class="form-label" for="isbn"> ISBN# </label>
-                    <input type="text" id="isbn" class="form-control">
-                </div>
-                <div class="switch-container">
-                <label class="form-check-label mt-4" for="flexSwitchCheckDefault">Completed</label>
-                <div class="form-switch mt-1 mb-4">
-                    <input class="form-check-input check-slider" type="checkbox" id="flexSwitchCheckDefault">
-                </div>
+                <!-- container for completed, # of pages, and pages read -->
+                <div id="form-pages">
+                    <!-- completed switch -->
+                    <div class="switch-container">
+                        <label class="form-check-label mt-4" for="flexSwitchCheckDefault">Completed</label>
+                        <div class="form-switch mt-1">
+                            <input class="form-check-input check-slider" type="checkbox" id="flexSwitchCheckDefault">
+                        </div>
+                    </div>
+                    <!-- number of pages -->
+                    <div class="form-group mt-4">
+                        <label class="form-label" for="pages"> Number of Pages </label>
+                        <input type="number" id="pages" class="form-control">
+                    </div>
+                    <!-- pages read -->
+                    <div class="form-group mt-4 mb-4">
+                        <label class="form-label" for="pages"> Current Page Number </label>
+                        <input type="number" id="pages" class="form-control">
+                    </div>
                 </div>
                 <input type="submit" value="Add Book" class="btn btn-primary fa-pull-right mt-4">
             </form>
-            </div>
+        </div>
         </div>
     </main>
-	<script src="app.js"></script>
-  </body>
+    <script src="app.js"></script>
+</body>
+
 </html>

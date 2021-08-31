@@ -41,11 +41,19 @@ class Library {
         `;
         bookList.appendChild(row);
     }
+    static clearForm(){
+        document.querySelector("#title").value = "";
+        document.querySelector("#author").value = "";
+        document.querySelector("#isbn").value = "";
+        document.querySelector(".check-slider").checked = false;
+    }
 }
 
 const bookView = document.querySelector(".table-container");
 const bookList = document.querySelector("#book-list");
 const form = document.querySelector("#book-form");
+const titleValidation = document.querySelector("#title");
+const validationFeedback = document.querySelector("#title-feedback");
 //events
 document.addEventListener("DOMContentLoaded", Library.display);
 form.addEventListener("submit", function (e) {
@@ -56,10 +64,38 @@ form.addEventListener("submit", function (e) {
     const author = document.querySelector("#author").value;
     const isbn = document.querySelector("#isbn").value;
     const completed = document.querySelector(".check-slider").checked;
+    
+    if(title && author){
+        let isInLibrary = myLibrary.some((book) => {
+            if(isbn === book.isbn){
+                validationFeedback.innerText = `ISBN#: ${isbn} (${title} by ${author}) has already been added!`
+                titleValidation.classList.add("is-invalid");
+                
+                return true;
+            } 
+        }) 
+        
+        if(isInLibrary) {
+            
+        }
+        else{
+            const newBook = new Book(title, author, isbn, completed);
+            myLibrary.push(newBook);
+            Library.addToList(newBook);
+            titleValidation.classList.remove("is-invalid");
+            Library.clearForm();
+        }
+        
+            
+        
 
-    if(title){
-        const newBook = new Book(title, author, isbn, completed);
-        Library.addToList(newBook);
+        
+        
+        
+        
+
+        
+        
     }
     
 });
