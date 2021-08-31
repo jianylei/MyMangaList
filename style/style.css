@@ -3,6 +3,9 @@ body{
 }
 
 /* book list */
+th{
+    color: hsl(210, 29%, 24%);
+}
 #form-link{
     border: none;
 }
@@ -11,4 +14,8 @@ body{
 .form-container{
     width: 80%;
     margin: 100px auto 200px auto;
+}
+
+.switch-container{
+    text-align: center;
 }

@@ -14,14 +14,14 @@
   </head>
   <body>
     <main>
-        <div class="container mt-4">
+        <div class="container mt-5">
 
             <!-- main heading -->
             <h1 class="display-4 text-primary text-center mb-5"><i class="fas fa-book"></i>
                 Book List 
             </h1>
             <!-- Book list -->
-            <div class="table-container" hidden>
+            <div class="table-container">
                 <a href="#book-form" id="form-link" class="btn btn-outline-primary fa-pull-right mb-3"> Add Book </a>
                 <table class="table">
                     <thead>
@@ -29,7 +29,7 @@
                             <th> Title </th>
                             <th> Author </th>
                             <th> ISBN# </th>
-                            <th></th>
+                            <th> Completed </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -51,6 +51,12 @@
                 <div class="form-group mt-4">
                     <label class="form-label" for="isbn"> ISBN# </label>
                     <input type="text" id="isbn" class="form-control">
+                </div>
+                <div class="switch-container">
+                <label class="form-check-label mt-4" for="flexSwitchCheckDefault">Completed</label>
+                <div class="form-switch main-switch mt-1 mb-4">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                </div>
                 </div>
                 <input type="submit" value="Add Book" class="btn btn-primary fa-pull-right mt-4">
             </form>
