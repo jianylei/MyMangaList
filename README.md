@@ -1,1 +1,2 @@
-# book-list
+# MyMangaList
+
