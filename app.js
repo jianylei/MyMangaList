@@ -369,6 +369,10 @@ updatebtn.onclick = () => {
                     pagesForm.value,
                     readForm.value
                 );
+                cardList[i].querySelector("#card-style").style.backgroundImage = `url(${coverURLForm.value})`;;
+                myLibrary[i].url = coverURLForm.value;
+
+                flag = true;
             }
         }
         location.href = "#card-grid";
