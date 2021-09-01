@@ -119,6 +119,13 @@ class Library {
             readForm.value = book.read;
             coverURLForm.value = book.url;
 
+            //editing header
+            const span = document.createElement("span");
+            span.innerText = `${book.title}`;
+            span.style.color = "var(--primary-color)";
+            editHead.innerText = "Editing: ";
+            editHead.appendChild(span);
+            
             if(book.completed){
                 completedflag = true;
                 Library.disableRead();
@@ -204,35 +211,44 @@ class Library {
     
         if(titleForm.value){
             titleForm.classList.remove("is-invalid");
-    
-            if(authorForm.value) {
-                authorForm.classList.remove("is-invalid");
-    
-                if(pagesForm.value){
-                    pagesForm.classList.remove("is-invalid");
-                    
-                    if(completedForm.checked){
-                        readPages = pagesForm.value;
-                    }
-                    else if(readForm.value){
-                        if(Number(readForm.value) > Number(pagesForm.value)){
-                            readPages = 0;
-                            readForm.classList.add("is-invalid");
+            let isAldreadyAdded = false;
+            for(var i = 0, len = myLibrary.length; i < len && !isAldreadyAdded; i++){
+                if(titleForm.value.toLowerCase() === myLibrary[i].title.toLowerCase()){
+                    isAldreadyAdded = true;
+                    document.querySelector("#title-feedback").innerText = "Title already added!";
+                    titleForm.classList.add("is-invalid");
+                }
+            }
+            if(!isAldreadyAdded) {
+                if(authorForm.value) {
+                    authorForm.classList.remove("is-invalid");
+                    if(pagesForm.value){
+                        pagesForm.classList.remove("is-invalid");
+                        
+                        if(completedForm.checked){
+                            readPages = pagesForm.value;
                         }
-                        else{
-                            readPages = readForm.value;
-                            readForm.classList.remove("is-invalid");
+                        else if(readForm.value){
+                            if(Number(readForm.value) > Number(pagesForm.value)){
+                                readPages = 0;
+                                readForm.classList.add("is-invalid");
+                            }
+                            else{
+                                readPages = readForm.value;
+                                readForm.classList.remove("is-invalid");
+                            }
+                        }else{
+                            readPages = 0;
                         }
                     }else{
-                        readPages = 0;
+                        pagesForm.classList.add("is-invalid");
                     }
-                }else{
-                    pagesForm.classList.add("is-invalid");
+                }else {
+                    authorForm.classList.add("is-invalid");
                 }
-            }else {
-                authorForm.classList.add("is-invalid");
             }
         }else{
+            document.querySelector("#title-feedback").innerText = "Missing title!";
             titleForm.classList.add("is-invalid");
         }
         return readPages;
@@ -299,8 +315,6 @@ class Library {
     }
 }
 
-
-
 //create cancel/update buttons
 const updatecontainer = document.createElement("div");
 updatecontainer.classList.add("update-btn-container");
@@ -328,6 +342,7 @@ const deleteBtn = document.querySelector("#card-update-delete");
 
 
 //form selectors
+const editHead = document.querySelector(".edit-header");
 const titleForm = document.querySelector("#title");
 const authorForm = document.querySelector("#author");
 const mangaForm = document.querySelector(".manga-slider");
@@ -362,6 +377,7 @@ cancelbtn.onclick = () => {
     Library.clearForm();
     updateTitle = "";
     editflag = false;
+    editHead.innerText = "";
     Library.toggleButtons();
 }
 
@@ -400,6 +416,7 @@ updatebtn.onclick = () => {
         Library.clearForm();
         updateTitle = "";
         editflag = false;
+        editHead.innerText = "";
         Library.toggleButtons();
     }
 }
@@ -441,5 +458,3 @@ deletebtnModal.onclick = () => {
     document.getElementById('delete-modal').style.display = "none"
     deleteTitle = "";
 }
-
-
