@@ -237,14 +237,12 @@ form.addEventListener("submit", function (e) {
                 }else{
                     readPages = 0;
                 }
-                
             }else{
                 pagesForm.classList.add("is-invalid");
             }
         }else {
             authorForm.classList.add("is-invalid");
         }
-
     }else{
         titleForm.classList.add("is-invalid");
     }
