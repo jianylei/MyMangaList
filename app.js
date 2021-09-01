@@ -9,48 +9,48 @@ let myLibrary = [{
     author: "Koyoharu Gotouge",
     manga: true,
     completed: true,
-    pages: 205,
-    read: 205,
+    pages: "205",
+    read: "205",
     url: "https://static.wikia.nocookie.net/kimetsu-no-yaiba/images/8/83/Kimetsu_no_Yaiba_V1.png/revision/latest/scale-to-width-down/764?cb=20181206190730"
 },{
     title: "Jujutsu Kaisen",
     author: "Gege Akutami",
     manga: true,
     completed: false,
-    pages: 156,
-    read: 148,
+    pages: "156",
+    read: "148",
     url: "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/31/Volume_4.png/revision/latest/scale-to-width-down/764?cb=20190226191850"
 },{
     title: "The Outsiders",
     author: "S. E. Hinton",
     manga: false,
     completed: false,
-    pages: 192,
-    read: 145,
+    pages: "192",
+    read: "145",
     url: "https://inyrmargins.files.wordpress.com/2011/12/outsiders-17.jpg"
 },{
     title: "Bleach",
     author: "Tite Kubo",
     manga: true,
     completed: true,
-    pages: 686,
-    read: 686,
+    pages: "686",
+    read: "686",
     url: "https://images-na.ssl-images-amazon.com/images/I/81vbN16NtXL.jpg"
 },{
     title: "Kaguya-sama: Love Is War",
     author: "Aka Akasaka",
     manga: true,
     completed: false,
-    pages: 233,
-    read: 146,
+    pages: "233",
+    read: "146",
     url: "https://static.wikia.nocookie.net/kaguyasama-wa-kokurasetai/images/0/0e/Volume_1.png/revision/latest/scale-to-width-down/640?cb=20160816014343"
 },{
     title: "Chainsaw Man",
     author: "Tatsuki Fujimoto",
     manga: true,
     completed: false,
-    pages: 97,
-    read: 66,
+    pages: "97",
+    read: "66",
     url: "https://static.wikia.nocookie.net/chainsaw-man/images/0/0f/Volume_01.png/revision/latest/scale-to-width-down/764?cb=20190226192508"
 }];
 
@@ -180,7 +180,7 @@ class Library {
         mangaForm.checked = false;
         completedForm.checked = false;
         pagesForm.value = "";
-        readForm.value = "";
+        readForm.value = "0";
         coverURLForm.value = "";
         pagesRead.style.pointerEvents = "";
         pagesRead.placeholder = "";
@@ -357,7 +357,7 @@ updatebtn.onclick = () => {
         for(var i = 0, len = cardList.length, flag = false; i < len  && !flag; i++){
             if(cardList[i].querySelector("#card-title").innerText === updateTitle) {
                 cardList[i].querySelector("#card-title").innerText = titleForm.value;
-                myLibrary[i].author = titleForm.value;
+                myLibrary[i].title = titleForm.value;
 
                 cardList[i].querySelector("#card-author").innerText = authorForm.value;
                 myLibrary[i].author = authorForm.value;
@@ -369,6 +369,11 @@ updatebtn.onclick = () => {
                     pagesForm.value,
                     readForm.value
                 );
+                myLibrary[i].manga = mangaForm.checked;
+                myLibrary[i].completed = completedForm.checked;
+                myLibrary[i].pages = pagesForm.value;
+                myLibrary[i].read = readForm.value;
+
                 cardList[i].querySelector("#card-style").style.backgroundImage = `url(${coverURLForm.value})`;;
                 myLibrary[i].url = coverURLForm.value;
 
