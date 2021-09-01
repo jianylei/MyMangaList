@@ -66,7 +66,7 @@ class Book{
 class Library {
     static display() {
         const books = myLibrary;
-        if (cardView.innerText) {
+        if (books[0]) {
             formLink.hidden = false;
             books.forEach((book) => Library.addToList(book))
         }
@@ -89,11 +89,6 @@ class Library {
         const cardTitle = document.createElement("span");
         cardTitle.setAttribute("id", "card-title");
         cardTitle.innerText = `${book.title}`;
-
-        cardBody.appendChild(cardTitle);
-        cardStyle.appendChild(cardBody);
-        card.appendChild(cardStyle);
-        
 
         //buttons
         const cardBtn = document.createElement("div");
@@ -148,9 +143,12 @@ class Library {
             }
         }
         
-        cardBtn.appendChild(cardPages);
-        cardBtn.appendChild(cardUpdatePage);
+        cardBody.appendChild(cardTitle);
+        cardBody.appendChild(cardPages);
+        cardStyle.appendChild(cardBody);
+        card.appendChild(cardStyle);
         cardBtn.appendChild(cardUpdateDelete);
+        cardBtn.appendChild(cardUpdatePage);
         cardBtn.appendChild(cardUpdateComplete);
         card.appendChild(cardBtn);
 
@@ -267,6 +265,10 @@ form.addEventListener("submit", function (e) {
         let completedCheck = (completedForm.checked) ? true: false;
         const newBook = new Book(titleForm.value, authorForm.value, mangaCheck, completedCheck, pagesForm.value, readPages, coverURLForm.value);
         Library.addToList(newBook);
+        if(!myLibrary[0]) {
+            formLink.hidden = false;
+        }
+        myLibrary.push(newBook);
         Library.clearForm();
     }
 });

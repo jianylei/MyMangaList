@@ -1,5 +1,6 @@
 :root{
     --primary-color: #f8c515;
+    --secondary-color: #2a9fd6;
     --font-color: #adafae;
     --completed-color: hsl(121, 100%, 25%);
     --modal-bg-color: rgb(54 59 89);
@@ -102,6 +103,7 @@ body{
     background: radial-gradient(rgba(0, 0, 0, 0), rgba(22, 22, 22, 0.6));   
     padding: 5px 10px;
 }
+
 #card-title{
     font-family: var(--primary-font);
     color: var(--primary-color);
@@ -110,17 +112,22 @@ body{
     padding: 0;
 }
 .card-btn{
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 85%;
+    display:grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+    width: 95%;
     margin: auto;
 }
 #card-update-page, #card-update-complete, #card-update-delete{
     border: none;
-    margin-left: 5px;
     color: var(--font-color);
     background-color: #060606;
+}
+#card-update-delete{
+    grid-column: 1/2;
+}
+#card-update-page{
+    grid-column: 7/8;
 }
 /* card hover state */
 #card-update-complete:hover{
