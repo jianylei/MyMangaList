@@ -29,7 +29,7 @@
 
         <!-- cards -->
         <div class="card-container">
-            <div class="card-grid"></div>
+            <div class="card-grid" id="card-grid"></div>
         </div>
 
         <!-- Add book form -->
@@ -73,6 +73,7 @@
                     <div class="form-group mt-4 mb-4" id="read-container">
                         <label class="form-label" id="read-label" for="pages"> Current Page </label>
                         <input type="number" id="pages-read" class="form-control" value="0" min="0">
+                        <div class="invalid-feedback" id="pages-feedback"> Cannot exceed number of pages/ chapters! </div>
                     </div>
                     <!-- author -->
                 </div>

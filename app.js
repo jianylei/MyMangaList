@@ -2,6 +2,7 @@ let completedflag = false;
 let mangaflag = false;
 let editflag = false;
 let deleteTitle = "";
+let updateTitle = "";
 
 let myLibrary = [{
     title: "Kimetsu No Yaiba",
@@ -86,7 +87,10 @@ class Library {
         const cardBody = document.createElement("div");
         cardBody.classList.add("card-body");
         cardBody.setAttribute("id", "card-body-style");
-        cardBody.innerText = `${book.author}`;
+
+        const cardAuthor = document.createElement("div");
+        cardAuthor.setAttribute("id", "card-author");
+        cardAuthor.innerText = `${book.author}`;
 
         const cardTitle = document.createElement("span");
         cardTitle.setAttribute("id", "card-title");
@@ -104,6 +108,7 @@ class Library {
         cardUpdatePage.setAttribute("id", "card-update-page");
         cardUpdatePage.onclick = () => {
             editflag = true;
+            updateTitle = book.title;
             Library.clearForm();
             location.href = "#book-form";
             titleForm.value = book.title;
@@ -122,7 +127,6 @@ class Library {
                 mangaflag = true;
             }
             Library.toggleManga();
-
             Library.toggleButtons();
         }
         let iClass = document.createElement("i");
@@ -153,24 +157,7 @@ class Library {
         iClass.classList.add("far", "fa-check-circle");
         cardUpdateComplete.appendChild(iClass);
 
-        if(book.manga){
-            if(book.completed){
-                cardPages.innerText = `${book.pages} / ${book.pages} Chapters`;
-                cardUpdateComplete.style.color = "var(--completed-color)"
-            }
-            else{
-                cardPages.innerText = `${book.read} / ${book.pages} Chapters`;
-            }
-        }else{
-            if(book.completed){
-                cardPages.innerText = `${book.pages} / ${book.pages} Pages`;
-                cardUpdateComplete.style.color = "var(--completed-color)"
-            }
-            else{
-                cardPages.innerText = `${book.read} / ${book.pages} Pages`;
-            }
-        }
-        
+        cardBody.appendChild(cardAuthor);
         cardBody.appendChild(cardTitle);
         cardBody.appendChild(cardPages);
         cardStyle.appendChild(cardBody);
@@ -182,6 +169,7 @@ class Library {
 
         cardView.appendChild(card);
 
+        this.setPageValues(card, book.manga, book.completed, book.pages, book.read);
         //reset completed flag (form slider)
         completedflag = false;
         mangaflag = false;
@@ -216,7 +204,14 @@ class Library {
                         readPages = pagesForm.value;
                     }
                     else if(readForm.value){
-                        readPages = readForm.value;
+                        if(Number(readForm.value) > Number(pagesForm.value)){
+                            readPages = 0;
+                            readForm.classList.add("is-invalid");
+                        }
+                        else{
+                            readPages = readForm.value;
+                            readForm.classList.remove("is-invalid");
+                        }
                     }else{
                         readPages = 0;
                     }
@@ -254,35 +249,8 @@ class Library {
         }
     }
     static toggleButtons(){
-        
-        
         if(editflag) {
-            const updatecontainer = document.createElement("div");
             submitbtn.remove();
-            
-            updatecontainer.classList.add("update-btn-container");
-
-            const cancelbtn = document.createElement("button");
-            const updatebtn = document.createElement("input");
-
-            cancelbtn.classList.add("btn", "btn-secondary", "fa-pull-right");
-            updatebtn.classList.add("btn", "btn-success", "fa-pull-right");
-
-            cancelbtn.innerHTML = "Cancel";
-            updatebtn.value = "Update"
-            updatebtn.type = "submit";
-
-            updatebtn.style.margin = "10px"
-            cancelbtn.style.margin = "10px"
-            
-            cancelbtn.onclick = () => {
-                this.clearForm();
-                editflag = false;
-                this.toggleButtons();
-            }
-
-            updatecontainer.appendChild(cancelbtn);
-            updatecontainer.appendChild(updatebtn);
             form.appendChild(updatecontainer);
             
         }else{
@@ -291,19 +259,51 @@ class Library {
                 updatecontainer.remove();
                 form.appendChild(submitbtn);
             }
-            
-            
         }
-        
-
+    }
+    static setPageValues(node, manga, completed,  pages, read){
+        console.log(node)
+        if(manga){
+            if(completed){
+                node.querySelector(".card-pages").innerText = `${pages} / ${pages} Chapters`;
+                node.querySelector("#card-update-complete").style.color = "var(--completed-color)";
+            }
+            else{
+                node.querySelector(".card-pages").innerText = `${read} / ${pages} Chapters`;
+            }
+        }else{
+            if(completed){
+                node.querySelector(".card-pages").innerText = `${pages} / ${pages} Pages`;
+                node.querySelector("#card-update-complete").style.color = "var(--completed-color)";
+            }
+            else{
+                node.querySelector(".card-pages").innerText = `${read} / ${pages} Pages`;
+            }
+        }
     }
 }
 
 
 
+//create cancel/update buttons
+const updatecontainer = document.createElement("div");
+updatecontainer.classList.add("update-btn-container");
 
-const submitbtn = document.querySelector("#form-submit");
+const cancelbtn = document.createElement("button");
+const updatebtn = document.createElement("button");
 
+cancelbtn.classList.add("btn", "btn-secondary", "fa-pull-right");
+updatebtn.classList.add("btn", "btn-success", "fa-pull-right");
+
+cancelbtn.innerText = "Cancel";
+updatebtn.innerText = "Update";
+updatebtn.style.margin = "10px";
+cancelbtn.style.margin = "10px";
+
+updatecontainer.appendChild(cancelbtn);
+updatecontainer.appendChild(updatebtn);
+
+//card selectors
 const cardView = document.querySelector(".card-grid");
 const formLink = document.querySelector("#form-link");
 const form = document.querySelector("#book-form");
@@ -323,17 +323,14 @@ const coverURLForm = document.querySelector("#url");
 const pagesLabelForm = document.querySelector("#page-label");
 const readLabelForm = document.querySelector("#read-label");
 
+const submitbtn = document.querySelector("#form-submit");
+
 //modal selectors
 const cancelbtnModal = document.querySelector(".cancelbtn");
 const deletebtnModal = document.querySelector(".deletebtn");
 
 //events
 document.addEventListener("DOMContentLoaded", Library.display);
-
-//limit "read" attribute to be in range of "pages"
-pagesForm.onchange = () => {
-    readForm.setAttribute("max", `${pagesForm.value}`)
-}
 
 //disable "read" is completed == true
 mangaForm.onclick = () => {
@@ -343,6 +340,43 @@ mangaForm.onclick = () => {
 completedForm.onclick = () =>{
     completedflag = (completedflag)? false: true;
     Library.disableRead();
+}
+
+cancelbtn.onclick = () => {
+    Library.clearForm();
+    updateTitle = "";
+    editflag = false;
+    Library.toggleButtons();
+}
+
+updatebtn.onclick = () => {
+    const cardList = document.querySelectorAll(".card-child");
+    let readPages = Library.formValidation();
+
+    if(readPages){
+        for(var i = 0, len = cardList.length, flag = false; i < len  && !flag; i++){
+            if(cardList[i].querySelector("#card-title").innerText === updateTitle) {
+                cardList[i].querySelector("#card-title").innerText = titleForm.value;
+                myLibrary[i].author = titleForm.value;
+
+                cardList[i].querySelector("#card-author").innerText = authorForm.value;
+                myLibrary[i].author = authorForm.value;
+
+                Library.setPageValues(
+                    cardList[i], 
+                    mangaForm.checked, 
+                    completedForm.checked,
+                    pagesForm.value,
+                    readForm.value
+                );
+            }
+        }
+        location.href = "#card-grid";
+        Library.clearForm();
+        updateTitle = "";
+        editflag = false;
+        Library.toggleButtons();
+    }
 }
 
 form.addEventListener("submit", function (e) {
