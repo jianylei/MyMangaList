@@ -127,9 +127,6 @@ body{
     transform: scale(1.05);
     transition-duration: 700ms;
 }
-.isCompleted{
-    color: var(--completed-color);
-}
 
 /* form */
 #title, #author, #pages-read, #pages-number, #url{

@@ -131,7 +131,7 @@ class Library {
         }else{
             if(book.completed){
                 cardPages.innerText = `${book.pages} / ${book.pages} Pages`;
-                cardUpdateComplete.classList.add("isCompleted");
+                cardUpdateComplete.style.color = "var(--completed-color)"
             }
             else{
                 cardPages.innerText = `${book.read} / ${book.pages} Pages`;
