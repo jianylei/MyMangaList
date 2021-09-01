@@ -1,5 +1,6 @@
 let completedflag = false;
 let mangaflag = false;
+let deleteTitle = "";
 
 let myLibrary = [{
     title: "Kimetsu No Yaiba",
@@ -106,6 +107,8 @@ class Library {
         const cardUpdateDelete = document.createElement("button");
         cardUpdateDelete.setAttribute("id", "card-update-delete");
         cardUpdateDelete.onclick = () => {
+            deleteTitle = book.title;
+            //delete comfirm modal
             document.querySelector("#delete-modal").style.display="block";
             const confirmMsgg = document.querySelector(".confirmMsg");
             confirmMsgg.innerText = `Are you sure you want to delete `;
@@ -113,7 +116,6 @@ class Library {
             tmpspan.innerText = `${book.title}`;
             tmpspan.style.color = "#f8c515"
             confirmMsgg.appendChild(tmpspan);
-
         }
         iClass = document.createElement("i");
         iClass.classList.add("far", "fa-trash-alt");
@@ -180,6 +182,7 @@ const form = document.querySelector("#book-form");
 const pagesRead = document.querySelector("#pages-read");
 const deleteBtn = document.querySelector("#card-update-delete");
 
+
 //form selectors
 const titleForm = document.querySelector("#title");
 const authorForm = document.querySelector("#author");
@@ -191,6 +194,10 @@ const coverURLForm = document.querySelector("#url");
 
 const pagesLabelForm = document.querySelector("#page-label");
 const readLabelForm = document.querySelector("#read-label");
+
+//modal selectors
+const cancelbtnModal = document.querySelector(".cancelbtn");
+const deletebtnModal = document.querySelector(".deletebtn");
 
 //events
 document.addEventListener("DOMContentLoaded", Library.display);
@@ -206,11 +213,11 @@ mangaForm.onclick = () => {
     
     if(mangaflag) {
         pagesLabelForm.innerText = "Number of Chapters"
-        readLabelForm.innerText = "Current Chapter Number"
+        readLabelForm.innerText = "Current Chapter"
     }
     else{
         pagesLabelForm.innerText = "Number of Pages"
-        readLabelForm.innerText = "Current Pages Number"
+        readLabelForm.innerText = "Current Page"
     }
 }
 completedForm.onclick = () => {
@@ -272,4 +279,25 @@ form.addEventListener("submit", function (e) {
         Library.clearForm();
     }
 });
+
+//delete modal events
+cancelbtnModal.onclick = () => {
+    document.getElementById('delete-modal').style.display = "none"
+    deleteTitle = "";
+}
+
+deletebtnModal.onclick = () => {
+    const cardList = document.querySelectorAll(".card-child");
+    
+    for(var i = 0, len = cardList.length, flag = false; i < len  && !flag; i++){
+        if(cardList[i].querySelector("#card-title").innerText === deleteTitle) {
+            cardList[i].remove();
+            myLibrary.splice(i, 1);
+            flag = true;
+        }
+    }
+    document.getElementById('delete-modal').style.display = "none"
+    deleteTitle = "";
+}
+
 
