@@ -110,6 +110,16 @@ class Library {
 
         const cardUpdateDelete = document.createElement("button");
         cardUpdateDelete.setAttribute("id", "card-update-delete");
+        cardUpdateDelete.onclick = () => {
+            document.querySelector("#delete-modal").style.display="block";
+            const confirmMsgg = document.querySelector(".confirmMsg");
+            confirmMsgg.innerText = `Are you sure you want to delete `;
+            const tmpspan = document.createElement("span");
+            tmpspan.innerText = `${book.title}`;
+            tmpspan.style.color = "#f8c515"
+            confirmMsgg.appendChild(tmpspan);
+
+        }
         iClass = document.createElement("i");
         iClass.classList.add("far", "fa-trash-alt");
         cardUpdateDelete.appendChild(iClass);
@@ -155,6 +165,9 @@ class Library {
         document.querySelector("#author").value = "";
         mangaForm.checked = false;
         completedForm.checked = false;
+        pagesForm.value = "";
+        readForm.value = "";
+        coverURLForm.value = "";
         pagesRead.style.pointerEvents = "";
         pagesRead.placeholder = "";
 
@@ -167,6 +180,7 @@ const cardView = document.querySelector(".card-grid");
 const formLink = document.querySelector("#form-link");
 const form = document.querySelector("#book-form");
 const pagesRead = document.querySelector("#pages-read");
+const deleteBtn = document.querySelector("#card-update-delete");
 
 //form selectors
 const titleForm = document.querySelector("#title");
@@ -210,6 +224,7 @@ completedForm.onclick = () => {
         pagesRead.placeholder = "Disabled";
     }
     else{
+        readForm.value = 0;
         pagesRead.style.pointerEvents = "";
         pagesRead.placeholder = "";
     }
