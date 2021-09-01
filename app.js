@@ -95,8 +95,6 @@ class Library {
         card.appendChild(cardStyle);
         
 
-        let completed = (book.completed) ? true : false;
-
         //buttons
         const cardBtn = document.createElement("div");
         cardBtn.classList.add("card-btn");
@@ -123,7 +121,7 @@ class Library {
         cardUpdateComplete.appendChild(iClass);
 
         if(book.manga){
-            if(completed){
+            if(book.completed){
                 cardPages.innerText = `${book.pages} / ${book.pages} Chapters`;
                 cardUpdateComplete.style.color = "var(--completed-color)"
             }
@@ -131,7 +129,7 @@ class Library {
                 cardPages.innerText = `${book.read} / ${book.pages} Chapters`;
             }
         }else{
-            if(completed){
+            if(book.completed){
                 cardPages.innerText = `${book.pages} / ${book.pages} Pages`;
                 cardUpdateComplete.classList.add("isCompleted");
             }
@@ -155,9 +153,11 @@ class Library {
     static clearForm(){
         document.querySelector("#title").value = "";
         document.querySelector("#author").value = "";
-        document.querySelector("#isbn").value = "";
-        document.querySelector(".check-slider").checked = false;
-        document.querySelector(".manga-slider").checked = false;
+        mangaForm.checked = false;
+        completedForm.checked = false;
+        pagesRead.style.pointerEvents = "";
+        pagesRead.placeholder = "";
+
         completedflag = false;
         mangaflag = false;
     }
@@ -182,6 +182,12 @@ const readLabelForm = document.querySelector("#read-label");
 
 //events
 document.addEventListener("DOMContentLoaded", Library.display);
+
+//limit "read" attribute to be in range of "pages"
+pagesForm.onchange = () => {
+    readForm.setAttribute("max", `${pagesForm.value}`)
+}
+
 //disable "read" is completed == true
 mangaForm.onclick = () => {
     mangaflag = (mangaflag)? false: true;
@@ -199,6 +205,7 @@ completedForm.onclick = () => {
     completedflag = (completedflag)? false: true;
     
     if(completedflag) {
+        readForm.value = "";
         pagesRead.style.pointerEvents = "none";
         pagesRead.placeholder = "Disabled";
     }
@@ -244,7 +251,8 @@ form.addEventListener("submit", function (e) {
 
     if(readPages){
         let mangaCheck = (mangaForm.checked) ? true: false;
-        const newBook = new Book(titleForm.value, authorForm.value, mangaCheck, completedForm.checked, pagesForm.value, readPages, coverURLForm.value);
+        let completedCheck = (completedForm.checked) ? true: false;
+        const newBook = new Book(titleForm.value, authorForm.value, mangaCheck, completedCheck, pagesForm.value, readPages, coverURLForm.value);
         Library.addToList(newBook);
         Library.clearForm();
     }
