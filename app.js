@@ -153,6 +153,17 @@ class Library {
 
         const cardUpdateComplete = document.createElement("button");
         cardUpdateComplete.setAttribute("id", "card-update-complete");
+        cardUpdateComplete.onclick = () =>{
+            book.completed = (book.completed)? false: true;
+            this.toggleCompleted(book.completed, cardUpdateComplete);
+            if(book.completed) {
+                book.read = book.pages;
+                this.setPageValues(card, book.manga, book.completed, book.pages, book.read);
+            }else{
+                book.read = Number(book.pages) - 1;
+                this.setPageValues(card, book.manga, book.completed, book.pages, book.read);
+            }
+        }
         iClass = document.createElement("i");
         iClass.classList.add("far", "fa-check-circle");
         cardUpdateComplete.appendChild(iClass);
@@ -262,11 +273,9 @@ class Library {
         }
     }
     static setPageValues(node, manga, completed,  pages, read){
-        console.log(node)
         if(manga){
             if(completed){
                 node.querySelector(".card-pages").innerText = `${pages} / ${pages} Chapters`;
-                node.querySelector("#card-update-complete").style.color = "var(--completed-color)";
             }
             else{
                 node.querySelector(".card-pages").innerText = `${read} / ${pages} Chapters`;
@@ -274,11 +283,18 @@ class Library {
         }else{
             if(completed){
                 node.querySelector(".card-pages").innerText = `${pages} / ${pages} Pages`;
-                node.querySelector("#card-update-complete").style.color = "var(--completed-color)";
             }
             else{
                 node.querySelector(".card-pages").innerText = `${read} / ${pages} Pages`;
             }
+        }
+        this.toggleCompleted(completed, node.querySelector("#card-update-complete"));
+    }
+    static toggleCompleted(completed, node){
+        if(completed) {
+            node.style.color = "var(--completed-color)";
+        }else{
+            node.style.color = "";
         }
     }
 }
