@@ -1,5 +1,6 @@
 let completedflag = false;
 let mangaflag = false;
+let editflag = false;
 let deleteTitle = "";
 
 let myLibrary = [{
@@ -98,16 +99,37 @@ class Library {
         const cardPages = document.createElement("div");
         cardPages.classList.add("card-pages");
 
+        //update button
         const cardUpdatePage = document.createElement("button");
         cardUpdatePage.setAttribute("id", "card-update-page");
         cardUpdatePage.onclick = () => {
-            //update modal
-            document.querySelector("#update-modal").style.display="block";
+            editflag = true;
+            Library.clearForm();
+            location.href = "#book-form";
+            titleForm.value = book.title;
+            authorForm.value = book.author;
+            mangaForm.checked = book.manga;
+            completedForm.checked = book.completed;
+            pagesForm.value = book.pages;
+            readForm.value = book.read;
+            coverURLForm.value = book.url;
+
+            if(book.completed){
+                completedflag = true;
+                Library.disableRead();
+            }
+            if(book.manga){
+                mangaflag = true;
+            }
+            Library.toggleManga();
+
+            Library.toggleButtons();
         }
         let iClass = document.createElement("i");
         iClass.classList.add("fas", "fa-edit");
         cardUpdatePage.appendChild(iClass);
 
+        //delete button
         const cardUpdateDelete = document.createElement("button");
         cardUpdateDelete.setAttribute("id", "card-update-delete");
         cardUpdateDelete.onclick = () => {
@@ -165,8 +187,8 @@ class Library {
         mangaflag = false;
     }
     static clearForm(){
-        document.querySelector("#title").value = "";
-        document.querySelector("#author").value = "";
+        titleForm.value = "";
+        authorForm.value = "";
         mangaForm.checked = false;
         completedForm.checked = false;
         pagesForm.value = "";
@@ -178,7 +200,109 @@ class Library {
         completedflag = false;
         mangaflag = false;
     }
+    static formValidation() {
+        let readPages;
+    
+        if(titleForm.value){
+            titleForm.classList.remove("is-invalid");
+    
+            if(authorForm.value) {
+                authorForm.classList.remove("is-invalid");
+    
+                if(pagesForm.value){
+                    pagesForm.classList.remove("is-invalid");
+                    
+                    if(completedForm.checked){
+                        readPages = pagesForm.value;
+                    }
+                    else if(readForm.value){
+                        readPages = readForm.value;
+                    }else{
+                        readPages = 0;
+                    }
+                }else{
+                    pagesForm.classList.add("is-invalid");
+                }
+            }else {
+                authorForm.classList.add("is-invalid");
+            }
+        }else{
+            titleForm.classList.add("is-invalid");
+        }
+        return readPages;
+    }
+    static disableRead(){
+        if(completedflag) {
+            readForm.value = "";
+            pagesRead.style.pointerEvents = "none";
+            pagesRead.placeholder = "Disabled";
+        }
+        else{
+            readForm.value = 0;
+            pagesRead.style.pointerEvents = "";
+            pagesRead.placeholder = "";
+        }
+    }
+    static toggleManga(){
+        if(mangaflag) {
+            pagesLabelForm.innerText = "Number of Chapters"
+            readLabelForm.innerText = "Current Chapter"
+        }
+        else{
+            pagesLabelForm.innerText = "Number of Pages"
+            readLabelForm.innerText = "Current Page"
+        }
+    }
+    static toggleButtons(){
+        
+        
+        if(editflag) {
+            const updatecontainer = document.createElement("div");
+            submitbtn.remove();
+            
+            updatecontainer.classList.add("update-btn-container");
+
+            const cancelbtn = document.createElement("button");
+            const updatebtn = document.createElement("input");
+
+            cancelbtn.classList.add("btn", "btn-secondary", "fa-pull-right");
+            updatebtn.classList.add("btn", "btn-success", "fa-pull-right");
+
+            cancelbtn.innerHTML = "Cancel";
+            updatebtn.value = "Update"
+            updatebtn.type = "submit";
+
+            updatebtn.style.margin = "10px"
+            cancelbtn.style.margin = "10px"
+            
+            cancelbtn.onclick = () => {
+                this.clearForm();
+                editflag = false;
+                this.toggleButtons();
+            }
+
+            updatecontainer.appendChild(cancelbtn);
+            updatecontainer.appendChild(updatebtn);
+            form.appendChild(updatecontainer);
+            
+        }else{
+            const updatecontainer = document.querySelector(".update-btn-container");
+            if(updatecontainer){
+                updatecontainer.remove();
+                form.appendChild(submitbtn);
+            }
+            
+            
+        }
+        
+
+    }
 }
+
+
+
+
+const submitbtn = document.querySelector("#form-submit");
 
 const cardView = document.querySelector(".card-grid");
 const formLink = document.querySelector("#form-link");
@@ -214,62 +338,17 @@ pagesForm.onchange = () => {
 //disable "read" is completed == true
 mangaForm.onclick = () => {
     mangaflag = (mangaflag)? false: true;
-    
-    if(mangaflag) {
-        pagesLabelForm.innerText = "Number of Chapters"
-        readLabelForm.innerText = "Current Chapter"
-    }
-    else{
-        pagesLabelForm.innerText = "Number of Pages"
-        readLabelForm.innerText = "Current Page"
-    }
+    Library.toggleManga();
 }
-completedForm.onclick = () => {
+completedForm.onclick = () =>{
     completedflag = (completedflag)? false: true;
-    
-    if(completedflag) {
-        readForm.value = "";
-        pagesRead.style.pointerEvents = "none";
-        pagesRead.placeholder = "Disabled";
-    }
-    else{
-        readForm.value = 0;
-        pagesRead.style.pointerEvents = "";
-        pagesRead.placeholder = "";
-    }
+    Library.disableRead();
 }
 
 form.addEventListener("submit", function (e) {
     //prevent actual submission
     e.preventDefault();
-    let readPages;
-
-    if(titleForm.value){
-        titleForm.classList.remove("is-invalid");
-
-        if(authorForm.value) {
-            authorForm.classList.remove("is-invalid");
-
-            if(pagesForm.value){
-                pagesForm.classList.remove("is-invalid");
-                
-                if(completedForm.checked){
-                    readPages = pagesForm.value;
-                }
-                else if(readForm.value){
-                    readPages = readForm.value;
-                }else{
-                    readPages = 0;
-                }
-            }else{
-                pagesForm.classList.add("is-invalid");
-            }
-        }else {
-            authorForm.classList.add("is-invalid");
-        }
-    }else{
-        titleForm.classList.add("is-invalid");
-    }
+    let readPages = Library.formValidation();
 
     if(readPages){
         let mangaCheck = (mangaForm.checked) ? true: false;
