@@ -50,7 +50,7 @@
                 <!-- container for completed, # of pages, and pages read -->
                 <div id="form-pages">
                     <!-- completed switch -->
-                        <div class="switch-container">
+                    <div class="switch-container">
                         <label class="form-check-label mt-4" for="switch2">Manga</label>
                         <div class="form-switch mt-1">
                             <input class="form-check-input manga-slider" type="checkbox" id="flexSwitchCheckDefault">
@@ -61,7 +61,8 @@
                         <label class="form-check-label mt-4" for="flexSwitchCheckDefault">Completed</label>
                         <div class="form-switch mt-1">
                             <input class="form-check-input check-slider" type="checkbox" id="flexSwitchCheckDefault">
-                        </div> </div>
+                        </div>
+                    </div>
                     <!-- number of pages -->
                     <div class="form-group mt-4">
                         <label class="form-label" id="page-label" for="pages"> Number of Pages </label>
@@ -71,7 +72,7 @@
                     <!-- pages read -->
                     <div class="form-group mt-4 mb-4">
                         <label class="form-label" id="read-label" for="pages"> Current Page </label>
-                        <input type="number" id="pages-read" class="form-control"  value="0" min="0">
+                        <input type="number" id="pages-read" class="form-control" value="0" min="0">
                     </div>
                     <!-- author -->
                 </div>
@@ -85,19 +86,68 @@
         </div>
         </div>
     </main>
-     <!-- delete modal -->
-     <div id="delete-modal" class="delete-modal">
-        <span onclick="document.getElementById('delete-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
-        <div class="modal-content" action="/action_page.php">
-          <div class="delete-modal-container">
-            <p class="confirmMsg"></p>
-            <div class="clearfix">
-              <button type="button" class="btn btn-secondary cancelbtn">Cancel</button>
-              <button type="button" class="btn btn-danger deletebtn">Delete</button>
+    <!-- delete modal -->
+    <div id="delete-modal" class="delete-modal">
+        <span onclick="document.getElementById('delete-modal').style.display='none'" class="close"
+            title="Close Modal">&times;</span>
+        <div class="modal-content">
+            <div class="delete-modal-container">
+                <p class="confirmMsg"></p>
+                <div class="clearfix">
+                    <button type="button" class="btn btn-secondary cancelbtn">Cancel</button>
+                    <button type="button" class="btn btn-danger deletebtn">Delete</button>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+    <!-- update modal -->
+    <div id="update-modal" class="update-modal">
+        <span onclick="document.getElementById('update-modal').style.display='none'" class="close"
+            title="Close Modal">&times;</span>
+        <div class="modal-content-update">
+            <div class="update-modal-container">
+                <div class="form-container-modal">
+                    <form id="book-form-modal">
+                        <!-- title -->
+                        <div class="form-group mt-4">
+                            <label class="form-label" for="title"> Title </label>
+                            <input type="text" id="title-modal" class="form-control">
+                            <div class="invalid-feedback" id="title-feedback"> Missing title! </div>
+                        </div>
+                        <!-- author -->
+                        <div class="form-group mt-4">
+                            <label class="form-label" for="author"> Author </label>
+                            <input type="text" id="author-modal" class="form-control ">
+                            <div class="invalid-feedback" id="author-feedback"> Missing author! </div>
+                        </div>
+                        <!-- container for completed, # of pages, and pages read -->
+                        <div id="form-pages">
+                          
+                            <!-- number of pages -->
+                            <div class="form-group mt-4">
+                                <label class="form-label" id="page-label" for="pages"> # of Pages </label>
+                                <input type="number" id="pages-number-modal" class="form-control" min="1">
+                                <div class="invalid-feedback" id="pages-feedback"> Missing number! </div>
+                            </div>
+                            <!-- pages read -->
+                            <div class="form-group mt-4 mb-4">
+                                <label class="form-label" id="read-label" for="pages"> Current Page </label>
+                                <input type="number" id="pages-read-modal" class="form-control" value="0" min="0">
+                            </div>
+                            <!-- author -->
+                        </div>
+                        <!-- cover url -->
+                        <div class="form-group mb-4">
+                            <label class="form-label" for="url"> Cover Art URL (optional) </label>
+                            <input type="text" id="url" class="form-control ">
+                        </div>
+                        <input type="submit" value="Finish" class="btn btn-primary fa-pull-right mt-4">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="app.js"></script>
 </body>

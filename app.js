@@ -100,6 +100,10 @@ class Library {
 
         const cardUpdatePage = document.createElement("button");
         cardUpdatePage.setAttribute("id", "card-update-page");
+        cardUpdatePage.onclick = () => {
+            //update modal
+            document.querySelector("#update-modal").style.display="block";
+        }
         let iClass = document.createElement("i");
         iClass.classList.add("fas", "fa-edit");
         cardUpdatePage.appendChild(iClass);
