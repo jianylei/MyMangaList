@@ -47,7 +47,7 @@ body{
   grid-gap: 1rem;
 }
 /* responsive grid */
-@media (min-width: 1200px) {
+@media (min-width: 768px) {
     .card-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -87,7 +87,7 @@ body{
     color: white;
     font-size: 14px;
     text-shadow: 2px 2px 5px black;
-    background: radial-gradient(rgba(0, 0, 0, 0), rgba(32, 32, 32, 0.5));   
+    background: radial-gradient(rgba(0, 0, 0, 0), rgba(22, 22, 22, 0.6));   
     padding: 5px 10px;
 }
 #card-title{
@@ -101,7 +101,8 @@ body{
     display:flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-right: 10px;
+    width: 85%;
+    margin: auto;
 }
 #card-update-page, #card-update-complete, #card-update-delete{
     border: none;
@@ -126,6 +127,9 @@ body{
     transform: scale(1.05);
     transition-duration: 700ms;
 }
+.isCompleted{
+    color: var(--completed-color);
+}
 
 /* form */
 #title, #author, #pages-read, #pages-number, #url{
@@ -146,18 +150,12 @@ body{
     gap: 0 2rem;
     grid-template-columns: repeat(2,1fr);
 }
-.switch-container{
-    grid-column: span 2;
+.switch-container, .switch-container2{
     margin-right: 10px;
     padding: 0;
     text-align: center;
 }
 
-
-
-#pages{
-    pointer-events: none;
-}
 
 
 
