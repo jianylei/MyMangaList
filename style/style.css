@@ -129,6 +129,9 @@ body{
 #card-update-page{
     grid-column: 7/8;
 }
+#card-update-complete{
+    transform: scale(1.1);
+}
 /* card hover state */
 #card-update-complete:hover{
     transform: scale(1.4);
@@ -141,10 +144,6 @@ body{
 #card-update-page:hover{
     transform: scale(1.4);
     color: hsl(0, 0%, 100%);
-}
-.card-child:hover{
-    transform: scale(1.05);
-    transition-duration: 700ms;
 }
 
 /* form */

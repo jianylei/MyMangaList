@@ -66,12 +66,12 @@ class Book{
     }
 }
 
-class Library {
+class UI {
     static display() {
         const books = myLibrary;
         if (books[0]) {
             formLink.hidden = false;
-            books.forEach((book) => Library.addToList(book))
+            books.forEach((book) => UI.addToList(book))
         }
     }
     static addToList(book) {
@@ -109,8 +109,8 @@ class Library {
         cardUpdatePage.onclick = () => {
             editflag = true;
             updateTitle = book.title;
-            Library.clearForm();
-            location.href = "#book-form";
+            UI.clearForm();
+            location.href = "#form-container";
             titleForm.value = book.title;
             authorForm.value = book.author;
             mangaForm.checked = book.manga;
@@ -128,13 +128,13 @@ class Library {
             
             if(book.completed){
                 completedflag = true;
-                Library.disableRead();
+                UI.disableRead();
             }
             if(book.manga){
                 mangaflag = true;
             }
-            Library.toggleManga();
-            Library.toggleButtons();
+            UI.toggleManga();
+            UI.toggleButtons();
         }
         let iClass = document.createElement("i");
         iClass.classList.add("fas", "fa-edit");
@@ -386,29 +386,29 @@ const cancelbtnModal = document.querySelector(".cancelbtn");
 const deletebtnModal = document.querySelector(".deletebtn");
 
 //events
-document.addEventListener("DOMContentLoaded", Library.display);
+document.addEventListener("DOMContentLoaded", UI.display);
 
 //disable "read" is completed == true
 mangaForm.onclick = () => {
     mangaflag = (mangaflag)? false: true;
-    Library.toggleManga();
+    UI.toggleManga();
 }
 completedForm.onclick = () =>{
     completedflag = (completedflag)? false: true;
-    Library.disableRead();
+    UI.disableRead();
 }
 
 cancelbtn.onclick = () => {
-    Library.clearForm();
+    UI.clearForm();
     updateTitle = "";
     editflag = false;
     editHead.innerText = "";
-    Library.toggleButtons();
+    UI.toggleButtons();
 }
 
 updatebtn.onclick = () => {
     const cardList = document.querySelectorAll(".card-child");
-    let readPages = Library.formValidation();
+    let readPages = UI.formValidation();
 
     if(readPages){
         for(var i = 0, len = cardList.length, flag = false; i < len  && !flag; i++){
@@ -419,7 +419,7 @@ updatebtn.onclick = () => {
                 cardList[i].querySelector("#card-author").innerText = authorForm.value;
                 myLibrary[i].author = authorForm.value;
 
-                Library.setPageValues(
+                UI.setPageValues(
                     cardList[i], 
                     mangaForm.checked, 
                     completedForm.checked,
@@ -437,32 +437,32 @@ updatebtn.onclick = () => {
                 flag = true;
             }
         }
-        Library.showAlert(`${titleForm.value} has been modified`, "success");
+        UI.showAlert(`${titleForm.value} has been modified`, "success");
         location.href = "#alert";
-        Library.clearForm();
+        UI.clearForm();
         updateTitle = "";
         editflag = false;
         editHead.innerText = "";
-        Library.toggleButtons();
+        UI.toggleButtons();
     }
 }
 
 form.addEventListener("submit", function (e) {
     //prevent actual submission
     e.preventDefault();
-    let readPages = Library.formValidation();
+    let readPages = UI.formValidation();
 
     if(readPages){
         let mangaCheck = (mangaForm.checked) ? true: false;
         let completedCheck = (completedForm.checked) ? true: false;
         const newBook = new Book(titleForm.value, authorForm.value, mangaCheck, completedCheck, pagesForm.value, readPages, coverURLForm.value);
-        Library.addToList(newBook);
+        UI.addToList(newBook);
         if(!myLibrary[0]) {
             formLink.hidden = false;
         }
         myLibrary.push(newBook);
-        Library.showAlert(`Succesfully added ${titleForm.value}`, "primary");
-        Library.clearForm();
+        UI.showAlert(`Succesfully added ${titleForm.value}`, "primary");
+        UI.clearForm();
     }
 });
 
