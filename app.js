@@ -224,7 +224,8 @@ class Library {
                     titleForm.classList.add("is-invalid");
                 }
             }
-            if(!isAldreadyAdded) {
+            console.log(updateTitle)
+            if(!isAldreadyAdded || titleForm.value == updateTitle) {
                 if(authorForm.value) {
                     authorForm.classList.remove("is-invalid");
                     if(pagesForm.value){
