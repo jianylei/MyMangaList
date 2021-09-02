@@ -297,13 +297,13 @@ class Storage{
         let books;
         if(!localStorage.getItem("books")){
             books = [{
-                title: "Dragon Ball (sample data*)",
-                author: "Akira Toriyama",
+                title: "Tokyo Ghoul (sample data*)",
+                author: "Sui Ishida",
                 manga: true,
                 completed: true,
-                pages: "194",
-                read: "194",
-                url: "https://images-na.ssl-images-amazon.com/images/I/81Dy6cNM7yL.jpg"
+                pages: "179",
+                read: "179",
+                url: "https://static.wikia.nocookie.net/tokyoghoul/images/6/6a/Volume_01.jpg/revision/latest?cb=20161203075330"
             }];
         }
         else{
