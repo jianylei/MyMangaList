@@ -296,7 +296,15 @@ class Storage{
     static getBooks(){
         let books;
         if(!localStorage.getItem("books")){
-            books = [];
+            books = [{
+                title: "Dragon Ball (sample data*)",
+                author: "Akira Toriyama",
+                manga: true,
+                completed: true,
+                pages: "194",
+                read: "194",
+                url: "https://images-na.ssl-images-amazon.com/images/I/81Dy6cNM7yL.jpg"
+            }];
         }
         else{
             books = JSON.parse(localStorage.getItem("books"));
