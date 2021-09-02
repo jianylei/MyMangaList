@@ -303,7 +303,7 @@ class Storage{
                 completed: true,
                 pages: "179",
                 read: "179",
-                url: "https://static.wikia.nocookie.net/tokyoghoul/images/6/6a/Volume_01.jpg/revision/latest?cb=20161203075330"
+                url: "https://images-na.ssl-images-amazon.com/images/I/81fCk8HEkKL.jpg"
             }];
         }
         else{
