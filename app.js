@@ -170,7 +170,7 @@ class UI {
             titleForm.classList.remove("is-invalid");
             let isAldreadyAdded = false;
                 for(var i = 0, len = myLibrary.length; i < len && !isAldreadyAdded; i++){
-                    if(titleForm.value.toLowerCase() === myLibrary[i].title.toLowerCase() && myLibrary[i].title.toLowerCase() !== updateTitle){
+                    if(titleForm.value.toLowerCase() === myLibrary[i].title.toLowerCase() && myLibrary[i].title.toLowerCase() !== updateTitle.toLowerCase()){
                         isAldreadyAdded = true;
                         document.querySelector("#title-feedback").innerText = "Title already added!";
                         titleForm.classList.add("is-invalid");
