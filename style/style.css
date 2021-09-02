@@ -279,3 +279,6 @@ body{
         height: 20rem;
       }
   }
+  .alert-success{
+      background-color: var(--completed-color);
+  }

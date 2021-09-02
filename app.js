@@ -192,20 +192,25 @@ class Library {
         completedflag = false;
         mangaflag = false;
     }
-    static clearForm(){
-        titleForm.value = "";
-        authorForm.value = "";
-        mangaForm.checked = false;
-        completedForm.checked = false;
-        pagesForm.value = "";
-        readForm.value = "0";
-        coverURLForm.value = "";
-        pagesRead.style.pointerEvents = "";
-        pagesRead.placeholder = "";
-
-        completedflag = false;
-        mangaflag = false;
+    static showAlert(msg, className){
+        const div = document.createElement("div");
+        div.classList.add("alert", `alert-${className}`);
+        div.setAttribute("id", "alert");
+        div.appendChild(document.createTextNode(msg));
+        if(editflag){
+            const container = document.querySelector(".card-container");
+            container.insertBefore(div, cardView);
+        }else{
+            const container = document.querySelector(".form-container");
+            container.insertBefore(div, form);
+        }
+        //dismiss after ...
+        setTimeout(()=>
+            document.querySelector(".alert").remove(),
+            5000
+        );
     }
+
     static formValidation() {
         let readPages;
     
@@ -288,6 +293,13 @@ class Library {
             }
         }
     }
+    static toggleCompleted(completed, node){
+        if(completed) {
+            node.style.color = "var(--completed-color)";
+        }else{
+            node.style.color = "";
+        }
+    }
     static setPageValues(node, manga, completed,  pages, read){
         if(manga){
             if(completed){
@@ -305,13 +317,25 @@ class Library {
             }
         }
         this.toggleCompleted(completed, node.querySelector("#card-update-complete"));
-    }
-    static toggleCompleted(completed, node){
-        if(completed) {
-            node.style.color = "var(--completed-color)";
-        }else{
-            node.style.color = "";
-        }
+    }  
+    static clearForm(){
+        titleForm.value = "";
+        authorForm.value = "";
+        mangaForm.checked = false;
+        completedForm.checked = false;
+        pagesForm.value = "";
+        readForm.value = "0";
+        coverURLForm.value = "";
+        pagesRead.style.pointerEvents = "";
+        pagesRead.placeholder = "";
+
+        completedflag = false;
+        mangaflag = false;
+
+        titleForm.classList.remove("is-invalid");
+        authorForm.classList.remove("is-invalid");
+        pagesForm.classList.remove("is-invalid");
+        readForm.classList.remove("is-invalid");
     }
 }
 
@@ -336,12 +360,12 @@ updatecontainer.appendChild(updatebtn);
 //card selectors
 const cardView = document.querySelector(".card-grid");
 const formLink = document.querySelector("#form-link");
-const form = document.querySelector("#book-form");
 const pagesRead = document.querySelector("#pages-read");
 const deleteBtn = document.querySelector("#card-update-delete");
 
 
 //form selectors
+const form = document.querySelector("#book-form");
 const editHead = document.querySelector(".edit-header");
 const titleForm = document.querySelector("#title");
 const authorForm = document.querySelector("#author");
@@ -412,7 +436,8 @@ updatebtn.onclick = () => {
                 flag = true;
             }
         }
-        location.href = "#card-grid";
+        Library.showAlert(`${titleForm.value} has been modified`, "success");
+        location.href = "#alert";
         Library.clearForm();
         updateTitle = "";
         editflag = false;
@@ -435,6 +460,7 @@ form.addEventListener("submit", function (e) {
             formLink.hidden = false;
         }
         myLibrary.push(newBook);
+        Library.showAlert(`Succesfully added ${titleForm.value}`, "primary");
         Library.clearForm();
     }
 });
