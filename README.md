@@ -25,27 +25,27 @@ Vanilla Javascript, HTML, CSS + Bootstrap
 
 ## Screenshots
 ### Home
-<p align = center>
+<p>
     <img src="demo-ss/card-view.png" width="90%">
 </p>
 
 ### Add New
-<p align = center>
+<p>
     <img src="demo-ss/form.png" width="90%">
 </p>
 
 ### Edit
-<p align = center>
+<p>
     <img src="demo-ss/edit.png" width="90%">
 </p>
 
 ### Delete
-<p align = center>
+<p>
     <img src="demo-ss/delete.png" width="90%">
 </p>
 
 ### Mobile
-<p align="center">
+<p>
     <img src="demo-ss/card-m.jpg" height="400px">
     <img src="demo-ss/form-m.jpg" height="400px">
     <img src="demo-ss/edit-m.jpg" height="400px">
