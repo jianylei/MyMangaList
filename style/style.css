@@ -268,16 +268,30 @@ body{
       width: 18rem;
       height: 20rem;
     }
-  }
-  @media screen and (max-width: 360px) {
-      .cancelbtn, .deletebtn {
+}
+@media screen and (max-width: 360px) {
+    .cancelbtn, .deletebtn {
         width: 80%;
-      }
-      .modal-content{
+    }
+    .modal-content{
         width: 14rem;
         height: 20rem;
-      }
-  }
-  .alert-success{
-      background-color: var(--completed-color);
-  }
+    }
+}
+.alert-success{
+    background-color: var(--completed-color);
+}
+
+/* "built by..." */
+.signature{
+    color: var(--secondary-color);
+    margin: 20px;
+    text-align: center;
+}
+.link-git{
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.link-git:visited{
+    color: var(--primary-color);
+}

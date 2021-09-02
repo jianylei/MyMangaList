@@ -169,15 +169,14 @@ class UI {
         if(titleForm.value){
             titleForm.classList.remove("is-invalid");
             let isAldreadyAdded = false;
-            if(!editflag){
                 for(var i = 0, len = myLibrary.length; i < len && !isAldreadyAdded; i++){
-                    if(titleForm.value.toLowerCase() === myLibrary[i].title.toLowerCase()){
+                    if(titleForm.value.toLowerCase() === myLibrary[i].title.toLowerCase() && myLibrary[i].title.toLowerCase() !== updateTitle){
                         isAldreadyAdded = true;
                         document.querySelector("#title-feedback").innerText = "Title already added!";
                         titleForm.classList.add("is-invalid");
                     }
                 }
-            }
+            
             if(!isAldreadyAdded || titleForm.value == updateTitle) {
                 if(authorForm.value) {
                     authorForm.classList.remove("is-invalid");
