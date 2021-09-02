@@ -423,22 +423,23 @@ updatebtn.onclick = () => {
     }
 }
 
+//submit event
 form.addEventListener("submit", function (e) {
     //prevent actual submission
     e.preventDefault();
     let readPages = UI.formValidation();
 
     if(readPages){
-        let mangaCheck = (mangaForm.checked) ? true: false;
-        let completedCheck = (completedForm.checked) ? true: false;
-        const newBook = new Book(titleForm.value, authorForm.value, mangaCheck, completedCheck, pagesForm.value, readPages, coverURLForm.value);
-        UI.addToList(newBook);
-
-        Storage.addBook(newBook);
-
         if(!myLibrary[0]) {
             formLink.hidden = false;
         }
+
+        let mangaCheck = (mangaForm.checked) ? true: false;
+        let completedCheck = (completedForm.checked) ? true: false;
+        const newBook = new Book(titleForm.value, authorForm.value, mangaCheck, completedCheck, pagesForm.value, readPages, coverURLForm.value);
+        
+        UI.addToList(newBook);
+        Storage.addBook(newBook);
         myLibrary.push(newBook);
         UI.showAlert(`Succesfully added ${titleForm.value}`, "primary");
         UI.clearForm();

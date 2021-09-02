@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,12 +16,11 @@
 
 <body>
     <main>
-
         <!-- main heading -->
         <div class="heading-container">
             <h1 class="display-6" id="main-head" style="color: var(--primary-color); font-family: var(--primary-font);">
                 <i class="fas fa-book-reader"></i>
-                MyReadList 0.1
+                MyReadList
             </h1>
             <a href="#book-form" id="form-link" hidden> Add New </a>
         </div>
@@ -31,6 +29,7 @@
         <div class="card-container">
             <div class="card-grid" id="card-grid"></div>
         </div>
+
         <!-- Add book form -->
         <div class="form-container" id="form-container">
             <div class="edit-header" id="edit-header" style="text-align: center; margin-bottom: 10px;"></div>
@@ -73,7 +72,8 @@
                     <div class="form-group mt-4 mb-4" id="read-container">
                         <label class="form-label" id="read-label" for="pages"> Current Page </label>
                         <input type="number" id="pages-read" class="form-control" value="0" min="0">
-                        <div class="invalid-feedback" id="pages-feedback"> Cannot exceed number of pages/ chapters! </div>
+                        <div class="invalid-feedback" id="pages-feedback"> Cannot exceed number of pages/ chapters!
+                        </div>
                     </div>
                     <!-- author -->
                 </div>
@@ -87,6 +87,7 @@
         </div>
         </div>
     </main>
+
     <!-- delete modal -->
     <div id="delete-modal" class="delete-modal">
         <span onclick="document.getElementById('delete-modal').style.display='none'" class="close"
@@ -101,10 +102,6 @@
             </div>
         </div>
     </div>
-
-
-
     <script src="app.js"></script>
 </body>
-
 </html>
