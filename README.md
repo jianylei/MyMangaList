@@ -1,4 +1,9 @@
 # myLibrary
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+
+<a href="https://jianylei.github.io/myLibrary/">Live App</a>
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Tech](#tech)
@@ -19,6 +24,36 @@ Vanilla Javascript, HTML, CSS + Bootstrap
 </ul>
 
 ## Screenshots
+### Home
+<p>
+    <img src="demo-ss/card-view.png" width="90%">
+</p>
+
+### Add New
+<p>
+    <img src="demo-ss/form.png" width="90%">
+</p>
+
+### Edit
+<p>
+    <img src="demo-ss/edit.png" width="90%">
+</p>
+
+### Delete
+<p>
+    <img src="demo-ss/delete.png" width="90%">
+</p>
+
+### Mobile
+<p>
+    <img src="demo-ss/card-m.jpg" height="400px">
+    <img src="demo-ss/form-m.jpg" height="400px">
+    <img src="demo-ss/edit-m.jpg" height="400px">
+    <img src="demo-ss/delete-m.jpg" height="400px">
+</p>
+<p>
+    
+</p>
 
 ## Todos
 <ul>
