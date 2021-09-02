@@ -20,6 +20,7 @@ class Book{
 //class container UI utility functions
 class UI {
     static display() {
+        cardView.innerText = "";
         myLibrary = Storage.getBooks();
         if (myLibrary[0]) {
             formLink.hidden = false;
@@ -119,7 +120,7 @@ class UI {
                 book.read = book.pages;
                 this.setPageValues(card, book.manga, book.completed, book.pages, book.read);
             }else{
-                book.read = Number(book.pages) - 1;
+                book.read = 0;
                 this.setPageValues(card, book.manga, book.completed, book.pages, book.read);
             }
         }
@@ -168,14 +169,15 @@ class UI {
         if(titleForm.value){
             titleForm.classList.remove("is-invalid");
             let isAldreadyAdded = false;
-            for(var i = 0, len = myLibrary.length; i < len && !isAldreadyAdded; i++){
-                if(titleForm.value.toLowerCase() === myLibrary[i].title.toLowerCase()){
-                    isAldreadyAdded = true;
-                    document.querySelector("#title-feedback").innerText = "Title already added!";
-                    titleForm.classList.add("is-invalid");
+            if(!editflag){
+                for(var i = 0, len = myLibrary.length; i < len && !isAldreadyAdded; i++){
+                    if(titleForm.value.toLowerCase() === myLibrary[i].title.toLowerCase()){
+                        isAldreadyAdded = true;
+                        document.querySelector("#title-feedback").innerText = "Title already added!";
+                        titleForm.classList.add("is-invalid");
+                    }
                 }
             }
-            console.log(updateTitle)
             if(!isAldreadyAdded || titleForm.value == updateTitle) {
                 if(authorForm.value) {
                     authorForm.classList.remove("is-invalid");
@@ -407,41 +409,16 @@ updatebtn.onclick = () => {
     let readPages = UI.formValidation();
 
     if(readPages){
-        for(var i = 0, len = cardList.length, flag = false; i < len  && !flag; i++){
-            if(cardList[i].querySelector("#card-title").innerText === updateTitle) {
-                Storage.updateBook(updateTitle);
-
-                cardList[i].querySelector("#card-title").innerText = titleForm.value;
-                myLibrary[i].title = titleForm.value;
-
-                cardList[i].querySelector("#card-author").innerText = authorForm.value;
-                myLibrary[i].author = authorForm.value;
-
-                UI.setPageValues(
-                    cardList[i], 
-                    mangaForm.checked, 
-                    completedForm.checked,
-                    pagesForm.value,
-                    readForm.value
-                );
-                myLibrary[i].manga = mangaForm.checked;
-                myLibrary[i].completed = completedForm.checked;
-                myLibrary[i].pages = pagesForm.value;
-                myLibrary[i].read = readForm.value;
-
-                cardList[i].querySelector("#card-style").style.backgroundImage = `url(${coverURLForm.value})`;;
-                myLibrary[i].url = coverURLForm.value;
-
-                flag = true;
-            }
-        }
-
+        Storage.updateBook(updateTitle);
+        UI.display();
         UI.showAlert(`${titleForm.value} has been modified`, "success");
-        location.href = "#alert";
         UI.clearForm();
+        
+        location.href = "#alert";
         updateTitle = "";
         editflag = false;
         editHead.innerText = "";
+
         UI.toggleButtons();
     }
 }
@@ -476,18 +453,10 @@ cancelbtnModal.onclick = () => {
 
 deletebtnModal.onclick = () => {
     const cardList = document.querySelectorAll(".card-child");
-    
-    for(var i = 0, len = cardList.length, flag = false; i < len  && !flag; i++){
-        if(cardList[i].querySelector("#card-title").innerText === deleteTitle) {
-            cardList[i].remove();
-            myLibrary.splice(i, 1);
 
-            //remove from local storage
-            Storage.removeBook(deleteTitle);
+    Storage.removeBook(deleteTitle);
+    UI.display();
 
-            flag = true;
-        }
-    }
     document.getElementById('delete-modal').style.display = "none"
     deleteTitle = "";
 }
