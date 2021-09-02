@@ -4,56 +4,8 @@ let editflag = false;
 let deleteTitle = "";
 let updateTitle = "";
 
-let myLibrary = [{
-    title: "Kimetsu No Yaiba",
-    author: "Koyoharu Gotouge",
-    manga: true,
-    completed: true,
-    pages: "205",
-    read: "205",
-    url: "https://static.wikia.nocookie.net/kimetsu-no-yaiba/images/8/83/Kimetsu_no_Yaiba_V1.png/revision/latest/scale-to-width-down/764?cb=20181206190730"
-},{
-    title: "Jujutsu Kaisen",
-    author: "Gege Akutami",
-    manga: true,
-    completed: false,
-    pages: "156",
-    read: "148",
-    url: "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/31/Volume_4.png/revision/latest/scale-to-width-down/764?cb=20190226191850"
-},{
-    title: "The Outsiders",
-    author: "S. E. Hinton",
-    manga: false,
-    completed: false,
-    pages: "192",
-    read: "145",
-    url: "https://inyrmargins.files.wordpress.com/2011/12/outsiders-17.jpg"
-},{
-    title: "Bleach",
-    author: "Tite Kubo",
-    manga: true,
-    completed: true,
-    pages: "686",
-    read: "686",
-    url: "https://images-na.ssl-images-amazon.com/images/I/81vbN16NtXL.jpg"
-},{
-    title: "Kaguya-sama: Love Is War",
-    author: "Aka Akasaka",
-    manga: true,
-    completed: false,
-    pages: "233",
-    read: "146",
-    url: "https://static.wikia.nocookie.net/kaguyasama-wa-kokurasetai/images/0/0e/Volume_1.png/revision/latest/scale-to-width-down/640?cb=20160816014343"
-},{
-    title: "Chainsaw Man",
-    author: "Tatsuki Fujimoto",
-    manga: true,
-    completed: false,
-    pages: "97",
-    read: "66",
-    url: "https://static.wikia.nocookie.net/chainsaw-man/images/0/0f/Volume_01.png/revision/latest/scale-to-width-down/764?cb=20190226192508"
-}];
-
+let myLibrary;
+//main book class
 class Book{
     constructor(title, author, manga, completed, pages, read, url){
         this.title = title;
@@ -65,13 +17,13 @@ class Book{
         this.url = url;
     }
 }
-
+//class container UI utility functions
 class UI {
     static display() {
-        const books = myLibrary;
-        if (books[0]) {
+        myLibrary = Storage.getBooks();
+        if (myLibrary[0]) {
             formLink.hidden = false;
-            books.forEach((book) => UI.addToList(book))
+            myLibrary.forEach((book) => UI.addToList(book))
         }
     }
     static addToList(book) {
@@ -210,7 +162,6 @@ class UI {
             5000
         );
     }
-
     static formValidation() {
         let readPages;
     
@@ -339,6 +290,51 @@ class UI {
         readForm.classList.remove("is-invalid");
     }
 }
+//storage class
+class Storage{
+    static getBooks(){
+        let books;
+        if(!localStorage.getItem("books")){
+            books = [];
+        }
+        else{
+            books = JSON.parse(localStorage.getItem("books"));
+        }
+        return books;
+    }
+    static addBook(book){
+        const books = Storage.getBooks();
+
+        books.push(book);
+
+        localStorage.setItem("books", JSON.stringify(books));
+    }
+    static removeBook(name){
+        const books = Storage.getBooks();
+
+        books.forEach((book, index) => {
+            if(book.title === name) {
+                books.splice(index, 1);
+            }
+        });
+        localStorage.setItem("books", JSON.stringify(books));
+    }
+    static updateBook(name){
+        const books = Storage.getBooks();
+        books.forEach((book, index) => {
+            if(book.title === name) {
+                book.title = titleForm.value;
+                book.author = authorForm.value;
+                book.manga = mangaForm.checked;
+                book.completed = completedForm.checked;
+                book.pages = pagesForm.value;
+                book.read = readForm.value;
+                book.url = coverURLForm.value;
+            }
+        });
+        localStorage.setItem("books", JSON.stringify(books));
+    }
+}
 
 //create cancel/update buttons
 const updatecontainer = document.createElement("div");
@@ -413,6 +409,8 @@ updatebtn.onclick = () => {
     if(readPages){
         for(var i = 0, len = cardList.length, flag = false; i < len  && !flag; i++){
             if(cardList[i].querySelector("#card-title").innerText === updateTitle) {
+                Storage.updateBook(updateTitle);
+
                 cardList[i].querySelector("#card-title").innerText = titleForm.value;
                 myLibrary[i].title = titleForm.value;
 
@@ -437,6 +435,7 @@ updatebtn.onclick = () => {
                 flag = true;
             }
         }
+
         UI.showAlert(`${titleForm.value} has been modified`, "success");
         location.href = "#alert";
         UI.clearForm();
@@ -457,6 +456,9 @@ form.addEventListener("submit", function (e) {
         let completedCheck = (completedForm.checked) ? true: false;
         const newBook = new Book(titleForm.value, authorForm.value, mangaCheck, completedCheck, pagesForm.value, readPages, coverURLForm.value);
         UI.addToList(newBook);
+
+        Storage.addBook(newBook);
+
         if(!myLibrary[0]) {
             formLink.hidden = false;
         }
@@ -479,6 +481,10 @@ deletebtnModal.onclick = () => {
         if(cardList[i].querySelector("#card-title").innerText === deleteTitle) {
             cardList[i].remove();
             myLibrary.splice(i, 1);
+
+            //remove from local storage
+            Storage.removeBook(deleteTitle);
+
             flag = true;
         }
     }
