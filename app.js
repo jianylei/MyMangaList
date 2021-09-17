@@ -282,6 +282,9 @@ class UI {
         pagesRead.style.pointerEvents = "";
         pagesRead.placeholder = "";
 
+        pagesLabelForm.innerText = "Number of Pages"
+        readLabelForm.innerText = "Current Page"
+
         completedflag = false;
         mangaflag = false;
 
