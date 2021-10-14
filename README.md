@@ -51,9 +51,6 @@ Vanilla Javascript, HTML, CSS + Bootstrap
     <img src="demo-ss/edit-m.jpg" height="400px">
     <img src="demo-ss/delete-m.jpg" height="400px">
 </p>
-<p>
-    
-</p>
 
 ## Todos
 <ul>
